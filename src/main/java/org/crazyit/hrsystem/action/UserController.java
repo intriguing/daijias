@@ -27,8 +27,17 @@ public class UserController{
 
 	@RequestMapping(value = "/register", method = RequestMethod.POST)
 	@ResponseBody
-	public Object Userregister(@RequestBody Username username,
-			HttpServletRequest request,HttpServletResponse response) throws UnsupportedEncodingException {
+	public Object UserRegister(@RequestParam("name") String name,@RequestParam("pass") String pass,@RequestParam("phone") String phone,@RequestParam("sex") String sex,@RequestParam("info") String info,HttpServletRequest request,HttpServletResponse response) throws UnsupportedEncodingException {
+        Username username=new Username();
+        username.setName(name);
+        username.setPass(pass);
+        username.setPhone(phone);
+        if(sex.equals("男")){
+            username.setSex(0);
+        }else {
+            username.setSex(1);
+        }
+        username.setInfor(info);
 		response.setCharacterEncoding("utf-8");
 		request.setCharacterEncoding("utf-8");
 		Map<String, Object> map = new HashMap<String, Object>();
