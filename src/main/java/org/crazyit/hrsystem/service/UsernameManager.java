@@ -13,6 +13,6 @@ public interface UsernameManager {
 	boolean saveUsername(Username username);
 	boolean updatePassword(String phone,String password);
 	boolean updatephone(String name,String oldphone,String newphone);
-
+	boolean deleteUsername(Username username);
 	boolean updateinfor(String name,String info);
 }

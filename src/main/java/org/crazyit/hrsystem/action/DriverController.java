@@ -58,6 +58,7 @@ public class DriverController {
             map.put("code", false);
         } else {
             driverManager.saveDriver(driver);
+            this.usernameManager.deleteUsername(username);
             map.put("code", true);
         }
         return map;
@@ -156,15 +157,28 @@ public class DriverController {
 
     @RequestMapping(value = "/driverStatus", method = RequestMethod.POST)
     @ResponseBody
-    public Object ChangeDriverStatus(@RequestParam("phone") String phone,
+    public Object ChangeDriverStatus( @RequestParam("pointX") String pointX,
+                                      @RequestParam("pointY") String pointY,
+            @RequestParam("phone") String phone,
                                      @RequestParam("status") String status) {
         Map<String, Object> map = new HashMap<String, Object>();
-        if (driverManager.changeDriverStatus(phone, status)) {
+        if (driverManager.changeDriverStatus(phone, status,pointX,pointY)) {
             map.put("code", true);
             return map;
         } else {
             map.put("code", false);
             return map;
         }
+    }
+    @RequestMapping(value = "/driverByPhone", method = RequestMethod.POST)
+    @ResponseBody
+    public Object findDriverByPhone(@RequestParam("phone") String phone){
+        Map<String, Object> map = new HashMap<String, Object>();
+        if(null!=driverManager.findByPhone(phone)){
+            map.put("code", true);
+            return map;
+        }
+        map.put("code", false);
+        return map;
     }
 }

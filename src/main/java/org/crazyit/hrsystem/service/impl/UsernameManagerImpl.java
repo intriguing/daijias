@@ -71,6 +71,12 @@ public class UsernameManagerImpl implements UsernameManager{
 	}
 
 	@Override
+	public boolean deleteUsername(Username username) {
+	        this.usernameDao.delete(username);
+		    return true;
+	}
+
+	@Override
 	public boolean updateinfor(String name, String info) {
 		// TODO Auto-generated method stub
 		return this.usernameDao.updateinfor(name, info);

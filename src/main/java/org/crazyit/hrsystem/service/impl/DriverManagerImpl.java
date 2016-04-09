@@ -37,7 +37,6 @@ public class DriverManagerImpl implements DriverManager{
 		this.driverDao.save(driver);
 		return true;
 	}
-
 	@Override
 	public List<Driver> findDriverrange(String range) {
 		// TODO Auto-generated method stub
@@ -81,8 +80,8 @@ public class DriverManagerImpl implements DriverManager{
 	}
 
 	@Override
-	public boolean changeDriverStatus(String phone, String status) {
-		return driverDao.updatePhoneStatus(phone,Integer.parseInt(status));
+	public boolean changeDriverStatus(String phone, String status,String pointX,String pointY) {
+		return driverDao.updatePhoneStatus(phone,Integer.parseInt(status),Integer.parseInt(pointX),Integer.parseInt(pointY));
 	}
 
 	@Override

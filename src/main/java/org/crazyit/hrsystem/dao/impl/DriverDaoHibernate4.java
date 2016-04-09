@@ -56,10 +56,12 @@ public class DriverDaoHibernate4 extends BaseDaoHibernate4<Driver> implements Dr
 	}
 
 	@Override
-	public boolean updatePhoneStatus(String phone, int status) {
+	public boolean updatePhoneStatus(String phone, int status,int pointX,int pointY) {
 		Driver temp=findByPhone(phone);
 		if(null!=temp){
 			temp.setStatus(status);
+			temp.setPointX(pointX);
+			temp.setPointY(pointY);
 			return  true;
 		}
 		return false;

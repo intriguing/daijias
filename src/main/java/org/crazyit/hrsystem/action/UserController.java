@@ -43,17 +43,26 @@ public class UserController {
         response.setCharacterEncoding("utf-8");
         request.setCharacterEncoding("utf-8");
         Map<String, Object> map = new HashMap<String, Object>();
-        if (!username.getName().equals(""))
+        if (!username.getName().equals("")){
+            if (null!=driverManager.findByName(username.getName())){
+                map.put("code", false);
+                return map;
+            }
             if (null != usernameManager.findUsernameByname(username.getName())) {
                 map.put("code", false);
                 return map;
             }
-        if (!username.getPhone().equals(""))
+        }
+        if (!username.getPhone().equals("")) {
+            if (null!=driverManager.findByPhone(username.getPhone())){
+                map.put("code", false);
+                return map;
+            }
             if (null != usernameManager.findUsernameByphone(username.getPhone())) {
                 map.put("code", true);
                 return map;
             }
-
+        }
         if (usernameManager.saveUsername(username)) {
             map.put("code", true);
         } else {
@@ -85,7 +94,7 @@ public class UserController {
             if (drivert.getPass().equals(pass)) {
                 map.put("code", true);
                 map.put("demo", 2);
-            }else {
+            } else {
                 map.put("code", false);
                 map.put("demo", 0);
             }
@@ -135,21 +144,21 @@ public class UserController {
         response.setCharacterEncoding("utf-8");
         request.setCharacterEncoding("utf-8");
         Map<String, Object> map = new HashMap<String, Object>();
-        if(null!=usernameManager.findUsernameByphone(phone)) {
-            if (usernameManager.updatePassword(phone, password)) {
+        if (null != this.driverManager.findByPhone(phone)) {
+            if (this.driverManager.updatePassword(phone, password)) {
                 map.put("code", true);
             } else {
                 map.put("code", false);
             }
             return map;
         }
-        if (null!=this.driverManager.findByPhone(phone)){
-            if (this.driverManager.updatePassword(phone,password)){
-                map.put("code",true);
+        if (null != usernameManager.findUsernameByphone(phone)) {
+            if (usernameManager.updatePassword(phone, password)) {
+                map.put("code", true);
             }
         }
-        map.put("code",false);
-        return  map;
+        map.put("code", false);
+        return map;
     }
 
     @RequestMapping(value = "/updateInfo", method = RequestMethod.POST)
@@ -179,20 +188,19 @@ public class UserController {
         response.setCharacterEncoding("utf-8");
         request.setCharacterEncoding("utf-8");
         Map<String, Object> map = new HashMap<String, Object>();
-        Username username = usernameManager.findUsernameByphone(phone);
-        if (null != username) {
-            if (username.getInfor().equals(info)) {
+        Driver driver = this.driverManager.findByPhone(phone);
+        if (null != driver) {
+            if (driver.getInfor().equals(info)) {
                 map.put("code", true);
             } else {
                 map.put("code", false);
             }
             return map;
         }
-        Driver driver=this.driverManager.findByPhone(phone);
-        if(null!=driver){
-            if(driver.getInfor().equals(info)){
-                map.put("code",true);
-                return map;
+        Username username = usernameManager.findUsernameByphone(phone);
+        if (null != username) {
+            if (username.getInfor().equals(info)) {
+                map.put("code", true);
             }
         }
         map.put("code", false);

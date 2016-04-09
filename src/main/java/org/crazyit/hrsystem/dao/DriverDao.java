@@ -10,7 +10,7 @@ public interface DriverDao extends BaseDao<Driver>{
 	public Driver findByName(String name);
 	boolean updateDriverrange(String name,int driverrange);
 	boolean updateStatus(String phone,int status);
-	boolean updatePhoneStatus(String name,int status);
+	boolean updatePhoneStatus(String phone,int status,int pointX,int pointY);
 	List<Driver> findDriver();
 	List<Driver> findByNameAndPass(Driver driver);
 	Driver  findByPhone(String phone);
