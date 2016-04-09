@@ -80,6 +80,18 @@ implements UsernameDao{
 	}
 
 	@Override
+	public boolean updatePassword(String phone, String pass) {
+		List<Username> emp=find("select p from Username p where p.phone=?0",phone);
+		if (emp!=null&&emp.size()>=1){
+			Username temp=emp.get(0);
+			temp.setPass(pass);
+			this.save(temp);
+			return  true;
+		}
+		return false;
+	}
+
+	@Override
 	public List<Username> findUsername() {
 		// TODO Auto-generated method stub
 		return find("select e from Username e");

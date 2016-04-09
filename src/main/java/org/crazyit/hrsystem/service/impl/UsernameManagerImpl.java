@@ -59,6 +59,12 @@ public class UsernameManagerImpl implements UsernameManager{
 	}
 
 	@Override
+	public boolean updatePassword(String phone, String password) {
+		return this.usernameDao.updatePassword(phone,password);
+	}
+
+
+	@Override
 	public boolean updatephone(String name, String oldphone, String newphone) {
 		// TODO Auto-generated method stub
 		return this.usernameDao.updatephone(name, oldphone, newphone);

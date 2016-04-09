@@ -8,9 +8,11 @@ public interface UsernameManager {
 	public static final int LOGIN_User = 1;
 	public static final int LOGIN_Adm = 2;
 	int validLogin(Adminater adm);
-	public Username findUsernameByname(String name);
-	public Username findUsernameByphone(String phone);
-	public boolean saveUsername(Username username);
-	public boolean updatephone(String name,String oldphone,String newphone);
+	Username findUsernameByname(String name);
+	Username findUsernameByphone(String phone);
+	boolean saveUsername(Username username);
+	boolean updatePassword(String phone,String password);
+	boolean updatephone(String name,String oldphone,String newphone);
+
 	boolean updateinfor(String name,String info);
 }

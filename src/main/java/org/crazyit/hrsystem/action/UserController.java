@@ -90,7 +90,7 @@ public class UserController{
 	}
 	@RequestMapping(value = "/updatephone", method = RequestMethod.POST)
 	@ResponseBody
-	public Object Userupdatephone(@RequestParam("name") String name,@RequestParam("oldphone") String oldphone,@RequestParam("newphone") String newphone,HttpServletRequest request,HttpServletResponse response) throws UnsupportedEncodingException{
+	public Object userUpdatePhone(@RequestParam("name") String name,@RequestParam("oldphone") String oldphone,@RequestParam("newphone") String newphone,HttpServletRequest request,HttpServletResponse response) throws UnsupportedEncodingException{
 		response.setCharacterEncoding("utf-8");
 		request.setCharacterEncoding("utf-8");
 		Map<String, Object> map = new HashMap<String, Object>();
@@ -101,22 +101,22 @@ public class UserController{
 		}
 		return map;
 	}
-	@RequestMapping(value = "/updatepass", method = RequestMethod.POST)
+	@RequestMapping(value = "/updatePass", method = RequestMethod.POST)
 	@ResponseBody
-	public Object Userupdatepass(@RequestParam("name") String name,@RequestParam("oldpass") String oldpass,@RequestParam("newpass") String newpass,HttpServletRequest request,HttpServletResponse response) throws UnsupportedEncodingException{
+	public Object userUpdatePass(@RequestParam("password") String password,@RequestParam("phone") String phone,HttpServletRequest request,HttpServletResponse response) throws UnsupportedEncodingException{
 		response.setCharacterEncoding("utf-8");
 		request.setCharacterEncoding("utf-8");
 		Map<String, Object> map = new HashMap<String, Object>();
-		if(usernameManager.updatephone(name, oldpass, newpass)){
+		if(usernameManager.updatePassword(phone,password)){
 			map.put("code", true);
 		}else{
 			map.put("code", false);
 		}
 		return map;
 	}
-	@RequestMapping(value = "/updateinfo", method = RequestMethod.POST)
+	@RequestMapping(value = "/updateInfo", method = RequestMethod.POST)
 	@ResponseBody
-	public Object Userupdateinfo(@RequestParam("name") String name,@RequestParam("info") String info,HttpServletRequest request,HttpServletResponse response) throws UnsupportedEncodingException{
+	public Object userUpdateInfo(@RequestParam("name") String name,@RequestParam("info") String info,HttpServletRequest request,HttpServletResponse response) throws UnsupportedEncodingException{
 		response.setCharacterEncoding("utf-8");
 		request.setCharacterEncoding("utf-8");
 		Map<String, Object> map = new HashMap<String, Object>();
@@ -131,5 +131,20 @@ public class UserController{
 	@ResponseBody
 	public String test(){
 		return "tsafa";
+	}
+	@RequestMapping(value = "/validate", method = RequestMethod.POST)
+	@ResponseBody
+	public Object certification(@RequestParam("phone") String phone,
+							@RequestParam("info") String info,HttpServletRequest request,HttpServletResponse response) throws UnsupportedEncodingException {
+		response.setCharacterEncoding("utf-8");
+		request.setCharacterEncoding("utf-8");
+		Map<String, Object> map = new HashMap<String, Object>();
+		Username username = usernameManager.findUsernameByphone(phone);
+		if(username.getInfor().equals(info)){
+			map.put("code", true);
+		}else{
+			map.put("code", false);
+		}
+		return map;
 	}
 }

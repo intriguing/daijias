@@ -12,5 +12,6 @@ public interface UsernameDao extends BaseDao<Username>{
 	boolean updatepass(String name,String oldpass,String newpass);
 	boolean updateinfor(String name,String info);
 	boolean updatephone(String name,String oldphone,String newphone);
+	boolean updatePassword(String phone,String pass);
 	List<Username> findUsername();
 }
