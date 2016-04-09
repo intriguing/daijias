@@ -79,4 +79,14 @@ public class DriverManagerImpl implements DriverManager{
 		}
 		return driversInfo;
 	}
+
+	@Override
+	public boolean changeDriverStatus(String phone, String status) {
+		return driverDao.updatePhoneStatus(phone,Integer.parseInt(status));
+	}
+
+	@Override
+	public boolean updatePassword(String phone, String password) {
+		return this.driverDao.updatePassword(phone,password);
+	}
 }

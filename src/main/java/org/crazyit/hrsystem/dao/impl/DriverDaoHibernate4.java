@@ -1,10 +1,10 @@
 package org.crazyit.hrsystem.dao.impl;
 
-import java.util.List;
-
 import org.crazyit.common.dao.impl.BaseDaoHibernate4;
 import org.crazyit.hrsystem.dao.DriverDao;
 import org.crazyit.hrsystem.domain.Driver;
+
+import java.util.List;
 
 public class DriverDaoHibernate4 extends BaseDaoHibernate4<Driver> implements DriverDao{
 
@@ -56,6 +56,16 @@ public class DriverDaoHibernate4 extends BaseDaoHibernate4<Driver> implements Dr
 	}
 
 	@Override
+	public boolean updatePhoneStatus(String phone, int status) {
+		Driver temp=findByPhone(phone);
+		if(null!=temp){
+			temp.setStatus(status);
+			return  true;
+		}
+		return false;
+	}
+
+	@Override
 	public List<Driver> findDriver() {
 		// TODO Auto-generated method stub
 		return find("select e from Driver e");
@@ -85,6 +95,18 @@ public class DriverDaoHibernate4 extends BaseDaoHibernate4<Driver> implements Dr
 		// TODO Auto-generated method stub
 		return find("select e from Driver e where e.pointX between ?0 and ?1 and e.pointY between ?2 and ?3"
 				,pointX-60000000,pointX+60000000,pointY-60000000,pointY+60000000);
+	}
+
+	@Override
+	public boolean updatePassword(String phone, String pass) {
+		List<Driver> emp=find("select p from Driver p where p.phone=?0",phone);
+		if (emp!=null&&emp.size()>=1){
+			Driver temp=emp.get(0);
+			temp.setPass(pass);
+			this.save(temp);
+			return  true;
+		}
+		return false;
 	}
 
 }

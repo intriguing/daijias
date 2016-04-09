@@ -13,5 +13,7 @@ public interface DriverManager {
 	boolean updateStatus(String name,int status);
     Driver findByName(String name);
     List<Driver> findDrivering();
-	public DriversInfo searchNearDriver(int pointX,int pointY);
+	DriversInfo searchNearDriver(int pointX,int pointY);
+	boolean changeDriverStatus(String phone,String status);
+	boolean updatePassword(String phone,String password);
 }
