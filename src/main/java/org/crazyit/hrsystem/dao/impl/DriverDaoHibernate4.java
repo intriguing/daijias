@@ -96,7 +96,7 @@ public class DriverDaoHibernate4 extends BaseDaoHibernate4<Driver> implements Dr
 	public List<Driver> searchNearDriver(int pointX, int pointY) {
 		// TODO Auto-generated method stub
 		return find("select e from Driver e where e.pointX between ?0 and ?1 and e.pointY between ?2 and ?3"
-				,pointX-60000000,pointX+60000000,pointY-60000000,pointY+60000000);
+				,pointX-20000,pointX+20000,pointY-20000,pointY+20000);
 	}
 
 	@Override
