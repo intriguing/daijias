@@ -10,7 +10,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.crazyit.hrsystem.domain.Driver;
+import org.crazyit.hrsystem.domain.DriverComments;
 import org.crazyit.hrsystem.domain.Username;
+import org.crazyit.hrsystem.service.DriverCommentsManager;
 import org.crazyit.hrsystem.service.DriverManager;
 import org.crazyit.hrsystem.service.UsernameManager;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +27,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @RequestMapping("/driver")
 public class DriverController {
     private DriverManager driverManager;
+    @Autowired
+    private DriverCommentsManager driverCommentsManager;
     @Autowired
     private UsernameManager usernameManager;
     @Autowired
@@ -179,6 +183,26 @@ public class DriverController {
             return map;
         }
         map.put("code", false);
+        return map;
+    }
+    @RequestMapping(value = "/driverComments", method = RequestMethod.POST)
+    @ResponseBody
+    public Object findDriverComments(@RequestParam("driverId") String driverId){
+        return driverCommentsManager.findCommentVoById(driverId);
+    }
+    @RequestMapping(value = "/saveDriverComments", method = RequestMethod.POST)
+    @ResponseBody
+    public Object saveDriverComments(@RequestBody DriverComments driverComments){
+       /* DriverComments driverComments=new DriverComments();
+        driverComments.setPhone(phone);
+        driverComments.setComment(Comment);
+        driverComments.setDriverId(driverId);*/
+        Map<String, Object> map = new HashMap<String, Object>();
+        if(driverCommentsManager.saveUsername(driverComments)){
+            map.put("code",true);
+        }else{
+            map.put("code",false);
+        }
         return map;
     }
 }

@@ -16,6 +16,7 @@
 		p:usernameDao-ref="usernameDao"
 		p:driverDao-ref="driverDao"
 		p:adminaterDao-ref="adminaterDao"
+		p:driverCommentsDao-ref="driverCommentsDao"
 		/>
 	<bean id="usernameManager"
 		class="org.crazyit.hrsystem.service.impl.UsernameManagerImpl"
@@ -26,7 +27,10 @@
 	<bean id="driverManager"
 		class="org.crazyit.hrsystem.service.impl.DriverManagerImpl"
 		parent="managerTemplate"/>
-	<!-- 配置Hibernate的局部事务管理器，使用HibernateTransactionManager类 
+	<bean id="driverCommentsManager"
+		  class="org.crazyit.hrsystem.service.impl.DriverCommentsManagerImpl"
+		  parent="managerTemplate"/>
+	<!-- 配置Hibernate的局部事务管理器，使用HibernateTransactionManager类
 		并注入SessionFactory的引用 -->
 	<bean id="transactionManager" class=
 		"org.springframework.orm.hibernate4.HibernateTransactionManager"
@@ -43,7 +47,7 @@
 	</tx:advice>
 	<aop:config proxy-target-class="true">
 		<aop:pointcut id="leePointcut"
-			expression="bean(usernameManager) or bean(adminaterManager) or bean(driverManager)"/>
+			expression="bean(usernameManager) or bean(adminaterManager) or bean(driverManager) or bean(driverCommentsManager)"/>
 		<!-- 指定在leePointcut切入点应用txAdvice事务增强处理 -->
 		<aop:advisor advice-ref="txAdvice" 
 			pointcut-ref="leePointcut"/>

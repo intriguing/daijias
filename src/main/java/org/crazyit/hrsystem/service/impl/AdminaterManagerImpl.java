@@ -3,18 +3,21 @@ package org.crazyit.hrsystem.service.impl;
 import java.util.List;
 
 import org.crazyit.hrsystem.dao.AdminaterDao;
+import org.crazyit.hrsystem.dao.DriverCommentsDao;
 import org.crazyit.hrsystem.dao.DriverDao;
 import org.crazyit.hrsystem.dao.UsernameDao;
 import org.crazyit.hrsystem.domain.Adminater;
 import org.crazyit.hrsystem.domain.Driver;
 import org.crazyit.hrsystem.domain.Username;
 import org.crazyit.hrsystem.service.AdminaterManager;
+import org.springframework.beans.factory.annotation.Autowired;
 
 public class AdminaterManagerImpl implements AdminaterManager{
 	private AdminaterDao adminaterDao;
 	private DriverDao driverDao;
 	private UsernameDao usernameDao;
-
+	private DriverCommentsDao driverCommentsDao;
+	public  void setDriverCommentsDao(DriverCommentsDao driverCommentsDao){this.driverCommentsDao=driverCommentsDao;}
 	public void setAdminaterDao(AdminaterDao adminaterDao) {
 		this.adminaterDao = adminaterDao;
 	}

@@ -1,16 +1,20 @@
 package org.crazyit.hrsystem.service.impl;
 
 import org.crazyit.hrsystem.dao.AdminaterDao;
+import org.crazyit.hrsystem.dao.DriverCommentsDao;
 import org.crazyit.hrsystem.dao.DriverDao;
 import org.crazyit.hrsystem.dao.UsernameDao;
 import org.crazyit.hrsystem.domain.Adminater;
 import org.crazyit.hrsystem.domain.Username;
 import org.crazyit.hrsystem.service.UsernameManager;
+import org.springframework.beans.factory.annotation.Autowired;
+
 public class UsernameManagerImpl implements UsernameManager{
 	private AdminaterDao adminaterDao;
 	private DriverDao driverDao;
 	private UsernameDao usernameDao;
-
+	private DriverCommentsDao driverCommentsDao;
+	public  void setDriverCommentsDao(DriverCommentsDao driverCommentsDao){this.driverCommentsDao=driverCommentsDao;}
 	@Override
 	public int validLogin(Adminater adm) {
 		// TODO Auto-generated method stub
