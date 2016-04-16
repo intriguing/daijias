@@ -34,7 +34,16 @@ public class DriverComments implements Serializable {
     private String comment;
     @Column(name = "driver_id", nullable = false, length =18)
     private String driverId;
+    @Column(name = "starLevel", nullable = false, length =18)
+    private String starLevel;
 
+    public String getStarLevel() {
+        return starLevel;
+    }
+
+    public void setStarLevel(String starLevel) {
+        this.starLevel = starLevel;
+    }
     public Integer getId() {
         return id;
     }

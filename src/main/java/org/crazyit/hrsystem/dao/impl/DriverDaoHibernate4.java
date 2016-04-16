@@ -95,8 +95,8 @@ public class DriverDaoHibernate4 extends BaseDaoHibernate4<Driver> implements Dr
 	@Override
 	public List<Driver> searchNearDriver(int pointX, int pointY) {
 		// TODO Auto-generated method stub
-		return find("select e from Driver e where e.pointX between ?0 and ?1 and e.pointY between ?2 and ?3"
-				,pointX-20000,pointX+20000,pointY-20000,pointY+20000);
+		return find("select e from Driver e where e.pointX between ?0 and ?1 and e.pointY between ?2 and ?3 and e.pointX!=?4 and e.pointY!=?5"
+				,pointX-20000,pointX+20000,pointY-20000,pointY+20000,pointX,pointY);
 	}
 
 	@Override
@@ -105,6 +105,19 @@ public class DriverDaoHibernate4 extends BaseDaoHibernate4<Driver> implements Dr
 		if (emp!=null&&emp.size()>=1){
 			Driver temp=emp.get(0);
 			temp.setPass(pass);
+			this.save(temp);
+			return  true;
+		}
+		return false;
+	}
+
+	@Override
+	public boolean updateStarLeave(String driverId,int StarLeave) {
+		int driverIds=Integer.parseInt(driverId);
+		List<Driver> emp=find("select p from Driver p where p.id=?0",driverIds);
+		if (emp!=null&&emp.size()>=1){
+			Driver temp=emp.get(0);
+			temp.setStarLeave(StarLeave);
 			this.save(temp);
 			return  true;
 		}

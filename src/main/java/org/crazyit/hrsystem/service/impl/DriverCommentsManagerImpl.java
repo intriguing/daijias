@@ -11,6 +11,7 @@ import org.crazyit.hrsystem.dao.DriverDao;
 import org.crazyit.hrsystem.dao.UsernameDao;
 import org.crazyit.hrsystem.domain.Driver;
 import org.crazyit.hrsystem.domain.DriverComments;
+import org.crazyit.hrsystem.domain.Username;
 import org.crazyit.hrsystem.service.DriverCommentsManager;
 import org.crazyit.hrsystem.vo.CommentVo;
 
@@ -55,9 +56,15 @@ public class DriverCommentsManagerImpl implements DriverCommentsManager {
         for(DriverComments driverComments :driverCommentses){
             CommentVo commentVo=new CommentVo();
             commentVo.setComment(driverComments.getComment());
+            commentVo.setStarLevel(driverComments.getStarLevel());
                 Driver driver=driverDao.findByPhone(driverComments.getPhone());
                 if(null!=driver){
                     commentVo.setUserName(driver.getName());
+                }else{
+                    Username username=usernameDao.findByPhone(driverComments.getPhone());
+                    if(null!=username){
+                        commentVo.setUserName(username.getName());
+                    }
                 }
                 commentVos.add(commentVo);
         }

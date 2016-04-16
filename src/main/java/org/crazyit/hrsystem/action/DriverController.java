@@ -15,6 +15,7 @@ import org.crazyit.hrsystem.domain.Username;
 import org.crazyit.hrsystem.service.DriverCommentsManager;
 import org.crazyit.hrsystem.service.DriverManager;
 import org.crazyit.hrsystem.service.UsernameManager;
+import org.crazyit.hrsystem.vo.CommentVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -58,6 +59,7 @@ public class DriverController {
         driver.setDrivingYears(Integer.parseInt(driverYear));
         driver.setPointX(Integer.parseInt(pointX));
         driver.setPointY(Integer.parseInt(pointY));
+        driver.setStarLeave(5);
         if (null != driverManager.findByPhone(phone)) {
             map.put("code", false);
         } else {
@@ -188,17 +190,27 @@ public class DriverController {
     @RequestMapping(value = "/driverComments", method = RequestMethod.POST)
     @ResponseBody
     public Object findDriverComments(@RequestParam("driverId") String driverId){
-        return driverCommentsManager.findCommentVoById(driverId);
+        Map<String, Object> map = new HashMap<String, Object>();
+        map.put("CommentVosInfo",driverCommentsManager.findCommentVoById(driverId));
+        return map;
     }
     @RequestMapping(value = "/saveDriverComments", method = RequestMethod.POST)
     @ResponseBody
-    public Object saveDriverComments(@RequestBody DriverComments driverComments){
-       /* DriverComments driverComments=new DriverComments();
+    public Object saveDriverComments(@RequestParam("driverId") String driverId,@RequestParam("phone") String phone,@RequestParam("comment") String comment,@RequestParam("starLevel") String starLevel){
+        /*@RequestBody DriverComments driverComments*/
+        DriverComments driverComments=new DriverComments();
         driverComments.setPhone(phone);
-        driverComments.setComment(Comment);
-        driverComments.setDriverId(driverId);*/
+        driverComments.setComment(comment);
+        driverComments.setDriverId(driverId);
+        driverComments.setStarLevel(starLevel);
         Map<String, Object> map = new HashMap<String, Object>();
         if(driverCommentsManager.saveUsername(driverComments)){
+           List<CommentVo> driverCommentsList= driverCommentsManager.findCommentVoById(driverId);
+            int starLevelTotal=0;
+            for(CommentVo commentVo:driverCommentsList)
+                starLevelTotal+=Integer.parseInt(commentVo.getStarLevel());
+            starLevelTotal=starLevelTotal/driverCommentsList.size();
+            driverManager.updateStarLeave(driverId,starLevelTotal);
             map.put("code",true);
         }else{
             map.put("code",false);

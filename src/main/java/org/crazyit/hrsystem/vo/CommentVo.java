@@ -17,15 +17,15 @@ import java.io.Serializable;
  */
 public class CommentVo  implements Serializable {
     private static final long serialVersionUID = 48L;
-    private String UserName;
+    private String userName;
     private String comment;
-
+    private String starLevel;
     public String getUserName() {
-        return UserName;
+        return userName;
     }
 
     public void setUserName(String userName) {
-        UserName = userName;
+        this.userName = userName;
     }
 
     public String getComment() {
@@ -34,5 +34,13 @@ public class CommentVo  implements Serializable {
 
     public void setComment(String comment) {
         this.comment = comment;
+    }
+
+    public String getStarLevel() {
+        return starLevel;
+    }
+
+    public void setStarLevel(String starLevel) {
+        this.starLevel = starLevel;
     }
 }

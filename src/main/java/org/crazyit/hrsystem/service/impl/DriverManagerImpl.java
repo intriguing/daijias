@@ -91,4 +91,9 @@ public class DriverManagerImpl implements DriverManager{
 	public boolean updatePassword(String phone, String password) {
 		return this.driverDao.updatePassword(phone,password);
 	}
+
+	@Override
+	public boolean updateStarLeave(String driverId, int StarLeave) {
+		return this.driverDao.updateStarLeave(driverId,StarLeave);
+	}
 }

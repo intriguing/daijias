@@ -24,6 +24,24 @@ public class Driver extends Username implements Serializable{
 	private int pointX;
 	@Column(name="pointY",length=10)
 	private int pointY;
+	@Column(name="starLeave",length=10)
+	private int starLeave;
+
+	public Driver(){}
+	public Driver(Integer id, String name, String pass,String phone,int sex,String infor,int status,int driverrange,int drivingYears,int pointX,int pointY){
+		super(id,name,pass,infor,phone,sex);
+		this.status=status;
+		this.driverrange=driverrange;
+		this.drivingYears=drivingYears;
+		this.pointX=pointX;
+		this.pointY=pointY;
+	}
+	public int getStatus() {
+		return status;
+	}
+	public void setStatus(int status) {
+		this.status = status;
+	}
 	public int getDrivingYears() {
 		return drivingYears;
 	}
@@ -48,19 +66,11 @@ public class Driver extends Username implements Serializable{
 	public void setDriverrange(int driverrange) {
 		this.driverrange = driverrange;
 	}
-	public Driver(){}
-	public Driver(Integer id, String name, String pass,String phone,int sex,String infor,int status,int driverrange,int drivingYears,int pointX,int pointY){
-		super(id,name,pass,infor,phone,sex);
-		this.status=status;
-		this.driverrange=driverrange;
-		this.drivingYears=drivingYears;
-		this.pointX=pointX;
-		this.pointY=pointY;
+	public int getStarLeave() {
+		return starLeave;
 	}
-	public int getStatus() {
-		return status;
-	}
-	public void setStatus(int status) {
-		this.status = status;
+
+	public void setStarLeave(int starLeave) {
+		this.starLeave = starLeave;
 	}
 }
