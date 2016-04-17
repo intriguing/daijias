@@ -2,10 +2,7 @@ package org.crazyit.hrsystem.service.impl;
 
 import java.util.List;
 
-import org.crazyit.hrsystem.dao.AdminaterDao;
-import org.crazyit.hrsystem.dao.DriverCommentsDao;
-import org.crazyit.hrsystem.dao.DriverDao;
-import org.crazyit.hrsystem.dao.UsernameDao;
+import org.crazyit.hrsystem.dao.*;
 import org.crazyit.hrsystem.domain.Adminater;
 import org.crazyit.hrsystem.domain.Driver;
 import org.crazyit.hrsystem.domain.Username;
@@ -17,6 +14,12 @@ public class AdminaterManagerImpl implements AdminaterManager{
 	private DriverDao driverDao;
 	private UsernameDao usernameDao;
 	private DriverCommentsDao driverCommentsDao;
+	private CodeDao codeDao;
+
+	public void setCodeDao(CodeDao codeDao) {
+		this.codeDao = codeDao;
+	}
+
 	public  void setDriverCommentsDao(DriverCommentsDao driverCommentsDao){this.driverCommentsDao=driverCommentsDao;}
 	public void setAdminaterDao(AdminaterDao adminaterDao) {
 		this.adminaterDao = adminaterDao;

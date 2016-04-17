@@ -7,8 +7,10 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.crazyit.hrsystem.domain.Code;
 import org.crazyit.hrsystem.domain.Driver;
 import org.crazyit.hrsystem.domain.Username;
+import org.crazyit.hrsystem.service.CodeManager;
 import org.crazyit.hrsystem.service.DriverManager;
 import org.crazyit.hrsystem.service.UsernameManager;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,10 +28,14 @@ public class UserController {
     private UsernameManager usernameManager;
     @Autowired
     private DriverManager driverManager;
-
+    @Autowired
+    private CodeManager codeManager;
     @RequestMapping(value = "/register", method = RequestMethod.POST)
     @ResponseBody
-    public Object UserRegister(@RequestParam("name") String name, @RequestParam("pass") String pass, @RequestParam("phone") String phone, @RequestParam("sex") String sex, @RequestParam("info") String info, HttpServletRequest request, HttpServletResponse response) throws UnsupportedEncodingException {
+    public Object UserRegister(@RequestParam("name") String name, @RequestParam("pass") String pass, @RequestParam("phone") String phone, @RequestParam("sex") String sex, @RequestParam("info") String info, @RequestParam("code") String code,HttpServletRequest request, HttpServletResponse response) throws UnsupportedEncodingException {
+        Code codes= new Code();
+        codes.setPhone(phone);
+        codes.setCode(code);
         Username username = new Username();
         username.setName(name);
         username.setPass(pass);
@@ -63,7 +69,7 @@ public class UserController {
                 return map;
             }
         }
-        if (usernameManager.saveUsername(username)) {
+        if (usernameManager.saveUsername(username)&&codeManager.saveCode(codes)) {
             map.put("code", true);
         } else {
             map.put("code", false);
@@ -155,6 +161,7 @@ public class UserController {
         if (null != usernameManager.findUsernameByphone(phone)) {
             if (usernameManager.updatePassword(phone, password)) {
                 map.put("code", true);
+                return map;
             }
         }
         map.put("code", false);
@@ -184,23 +191,15 @@ public class UserController {
     @RequestMapping(value = "/validate", method = RequestMethod.POST)
     @ResponseBody
     public Object certification(@RequestParam("phone") String phone,
-                                @RequestParam("info") String info, HttpServletRequest request, HttpServletResponse response) throws UnsupportedEncodingException {
+                                @RequestParam("code") String code, HttpServletRequest request, HttpServletResponse response) throws UnsupportedEncodingException {
         response.setCharacterEncoding("utf-8");
         request.setCharacterEncoding("utf-8");
         Map<String, Object> map = new HashMap<String, Object>();
-        Driver driver = this.driverManager.findByPhone(phone);
-        if (null != driver) {
-            if (driver.getInfor().equals(info)) {
+        Code codes = this.codeManager.findCodeByPhone(phone);
+        if (null != codes) {
+            if (codes.getCode().equals(code)) {
                 map.put("code", true);
-            } else {
-                map.put("code", false);
-            }
-            return map;
-        }
-        Username username = usernameManager.findUsernameByphone(phone);
-        if (null != username) {
-            if (username.getInfor().equals(info)) {
-                map.put("code", true);
+                return map;
             }
         }
         map.put("code", false);

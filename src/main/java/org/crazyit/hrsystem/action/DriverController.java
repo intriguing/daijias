@@ -39,7 +39,7 @@ public class DriverController {
 
     @RequestMapping(value = "/register", method = RequestMethod.POST)
     @ResponseBody
-    public Object Driverregister(@RequestParam("driverYear") String driverYear,@RequestParam("phone") String phone, @RequestParam("pointX") String pointX, @RequestParam("pointY") String pointY,HttpServletRequest request,HttpServletResponse response) throws UnsupportedEncodingException {
+    public Object Driverregister(@RequestParam("driverYear") String driverYear,@RequestParam("phone") String phone, @RequestParam("driverRange") String driverRange,@RequestParam("pointX") String pointX, @RequestParam("pointY") String pointY,HttpServletRequest request,HttpServletResponse response) throws UnsupportedEncodingException {
         response.setCharacterEncoding("utf-8");
         request.setCharacterEncoding("utf-8");
         Map<String, Object> map = new HashMap<String, Object>();
@@ -55,7 +55,7 @@ public class DriverController {
         driver.setPhone(username.getPhone());
         driver.setInfor(username.getInfor());
         driver.setStatus(1);
-        driver.setDriverrange(0);
+        driver.setDriverrange(Integer.parseInt(driverRange));
         driver.setDrivingYears(Integer.parseInt(driverYear));
         driver.setPointX(Integer.parseInt(pointX));
         driver.setPointY(Integer.parseInt(pointY));
