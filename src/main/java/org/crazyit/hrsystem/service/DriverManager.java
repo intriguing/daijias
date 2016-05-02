@@ -11,10 +11,11 @@ public interface DriverManager {
 	List<Driver> findDriverrange(String range);
 	boolean updateDriverrange(String name,int driverrange);
 	boolean updateStatus(String name,int status);
-    Driver findByName(String name);
-    List<Driver> findDrivering();
+	Driver findByName(String name);
+	List<Driver> findDrivering();
 	DriversInfo searchNearDriver(int pointX,int pointY);
 	boolean changeDriverStatus(String phone,String status,String pointX,String pointY);
 	boolean updatePassword(String phone,String password);
 	boolean updateStarLeave(String driverId,int StarLeave);
+	boolean deleteDriver(String driverId);
 }

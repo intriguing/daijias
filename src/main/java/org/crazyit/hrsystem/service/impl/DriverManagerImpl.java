@@ -78,7 +78,7 @@ public class DriverManagerImpl implements DriverManager{
 		driversInfo.setDrivers(emps);
 		driversInfo.setPageIndex(10);
 		if(emps.size()%10!=0){
-		driversInfo.setTotalPage(emps.size()/10+1);
+			driversInfo.setTotalPage(emps.size()/10+1);
 		}else{
 			driversInfo.setTotalPage(emps.size()/10);
 		}
@@ -98,5 +98,11 @@ public class DriverManagerImpl implements DriverManager{
 	@Override
 	public boolean updateStarLeave(String driverId, int StarLeave) {
 		return this.driverDao.updateStarLeave(driverId,StarLeave);
+	}
+
+	@Override
+	public boolean deleteDriver(String driverId) {
+		this.driverDao.delete(Driver.class,Integer.parseInt(driverId));
+		return true;
 	}
 }

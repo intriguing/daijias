@@ -7,7 +7,7 @@ import org.crazyit.hrsystem.domain.Driver;
 import org.crazyit.hrsystem.domain.Username;
 
 public interface AdminaterManager {
-	Adminater findByName(String name); 
+	Adminater findByName(String name);
 	boolean savaAdminater(Adminater adminater);
 	List<Driver> findDriver();
 	List<Username> findUsername();
