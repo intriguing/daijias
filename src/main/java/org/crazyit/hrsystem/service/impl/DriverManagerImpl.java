@@ -105,4 +105,9 @@ public class DriverManagerImpl implements DriverManager{
 		this.driverDao.delete(Driver.class,Integer.parseInt(driverId));
 		return true;
 	}
+
+	@Override
+	public int driverOnline() {
+		return this.driverDao.driverOnline();
+	}
 }

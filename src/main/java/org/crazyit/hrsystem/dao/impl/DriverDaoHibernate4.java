@@ -124,4 +124,10 @@ public class DriverDaoHibernate4 extends BaseDaoHibernate4<Driver> implements Dr
 		return false;
 	}
 
+	@Override
+	public int driverOnline() {
+		List<Driver> emp=this.find("select p from Hour p where p.status=1");
+		return emp.size();
+	}
+
 }

@@ -17,4 +17,5 @@ public interface DriverDao extends BaseDao<Driver>{
 	List<Driver> searchNearDriver(int pointX,int pointY);
 	boolean updatePassword(String phone,String pass);
 	boolean updateStarLeave(String driverId,int StarLeave);
+	int driverOnline();
 }

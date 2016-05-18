@@ -1,17 +1,16 @@
 package org.crazyit.hrsystem.action;
 
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.lang3.StringUtils;
-import org.crazyit.hrsystem.domain.Adminater;
-import org.crazyit.hrsystem.domain.Code;
-import org.crazyit.hrsystem.domain.Driver;
-import org.crazyit.hrsystem.domain.Username;
+import org.crazyit.hrsystem.domain.*;
 import org.crazyit.hrsystem.service.AdminaterManager;
 import org.crazyit.hrsystem.service.CodeManager;
 import org.crazyit.hrsystem.service.DriverManager;
+import org.crazyit.hrsystem.service.HourManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,6 +21,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Controller
 @RequestMapping("/adminater")
 public class AdminaterController {
+    @Autowired
+    private HourManager hourManager;
     @Autowired
     private DriverManager driverManager;
     @Autowired
@@ -167,6 +168,32 @@ public class AdminaterController {
         map.put("three",threes);
         map.put("two",twos);
         map.put("one",ones);
+        return map;
+    }
+    @RequestMapping(value = "/driverOnline", method = RequestMethod.POST)
+    @ResponseBody
+    public Object AdminaterDriverOnline() {
+        Map<String, Object> map = new HashMap<String, Object>();
+        SimpleDateFormat  sdf = new SimpleDateFormat("yyyy-MM-dd");
+        Date dateNow = new Date();
+        Calendar cl = Calendar.getInstance();
+        cl.setTime(dateNow);
+        cl.add(Calendar.DAY_OF_YEAR, -1);
+        Date dateFrom = cl.getTime();
+        String dateString = sdf.format(dateFrom);
+        List<Hour> temp=hourManager.findByDate(dateString);
+        cl.add(Calendar.DAY_OF_YEAR, -1);
+        dateFrom = cl.getTime();
+        dateString = sdf.format(dateFrom);
+        List<Hour> temps=hourManager.findByDate(dateString);
+        List<Integer> tempI=new ArrayList<Integer>();
+        for(int j=0;j<temp.size();j++){
+            Integer integer=new Integer(temp.get(j).getDriverNum()-temps.get(j).getDriverNum());
+            tempI.add(integer);
+        }
+        map.put("driverOnline1",temp);
+        map.put("driverOnline2",temps);
+        map.put("driverDifference",tempI);
         return map;
     }
 }

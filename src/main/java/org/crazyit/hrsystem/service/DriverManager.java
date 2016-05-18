@@ -18,4 +18,5 @@ public interface DriverManager {
 	boolean updatePassword(String phone,String password);
 	boolean updateStarLeave(String driverId,int StarLeave);
 	boolean deleteDriver(String driverId);
+	int driverOnline();
 }

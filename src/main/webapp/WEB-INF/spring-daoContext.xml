@@ -33,6 +33,7 @@
                 <value>org.crazyit.hrsystem.domain.Username</value>
                 <value>org.crazyit.hrsystem.domain.DriverComments</value>
                 <value>org.crazyit.hrsystem.domain.Code</value>
+                <value>org.crazyit.hrsystem.domain.Hour</value>
             </list>
         </property>
         <!-- 定义Hibernate的SessionFactory的属性 -->
@@ -71,5 +72,8 @@
           parent="daoTemplate"/>
     <bean id="codeDao"
           class="org.crazyit.hrsystem.dao.impl.CodeDaoHibernate4"
+          parent="daoTemplate"/>
+    <bean id="hourDao"
+          class="org.crazyit.hrsystem.dao.impl.HourDaoHibernate4"
           parent="daoTemplate"/>
 </beans>

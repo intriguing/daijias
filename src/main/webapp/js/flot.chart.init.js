@@ -1,5 +1,6 @@
 
 
+/*
 var data7_1 = [
     [1354586000000, 253],
     [1354587000000, 465],
@@ -82,10 +83,10 @@ $(function() {
 
             },
             yaxes: [{
-                /* First y axis */
+                /!* First y axis *!/
             }, {
-                /* Second y axis */
-                position: "right" /* left or right */
+                /!* Second y axis *!/
+                position: "right" /!* left or right *!/
             }]
         }
     );
@@ -146,6 +147,7 @@ $(function() {
         }
         update();
     });
+*/
 
     $(function() {
         $.ajax({
@@ -237,165 +239,113 @@ $(function() {
     });
 
     $(function() {
-        var data24Hours = [
-            [0, 601],
-            [1, 520],
-            [2, 337],
-            [3, 261],
-            [4, 157],
-            [5, 78],
-            [6, 58],
-            [7, 48],
-            [8, 54],
-            [9, 38],
-            [10, 88],
-            [11, 214],
-            [12, 364],
-            [13, 449],
-            [14, 558],
-            [15, 282],
-            [16, 379],
-            [17, 429],
-            [18, 518],
-            [19, 470],
-            [20, 330],
-            [21, 245],
-            [22, 358],
-            [23, 74]
-        ];
-        var data48Hours = [
-            [0, 445],
-            [1, 592],
-            [2, 738],
-            [3, 532],
-            [4, 234],
-            [5, 143],
-            [6, 147],
-            [7, 63],
-            [8, 64],
-            [9, 43],
-            [10, 86],
-            [11, 201],
-            [12, 315],
-            [13, 397],
-            [14, 512],
-            [15, 281],
-            [16, 360],
-            [17, 479],
-            [18, 425],
-            [19, 453],
-            [20, 422],
-            [21, 355],
-            [22, 340],
-            [23, 801]
-        ];
-        var dataDifference = [
-            [23, 727],
-            [22, 18],
-            [21, 110],
-            [20, 92],
-            [19, 17],
-            [18, 93],
-            [17, 50],
-            [16, 19],
-            [15, 1],
-            [14, 46],
-            [13, 52],
-            [12, 49],
-            [11, 13],
-            [10, 2],
-            [9, 5],
-            [8, 10],
-            [7, 15],
-            [6, 89],
-            [5, 65],
-            [4, 77],
-            [3, 271],
-            [2, 401],
-            [1, 72],
-            [0, 156]
-        ];
-        var ticks = [
-            [0, "22h"],
-            [1, ""],
-            [2, "00h"],
-            [3, ""],
-            [4, "02h"],
-            [5, ""],
-            [6, "04h"],
-            [7, ""],
-            [8, "06h"],
-            [9, ""],
-            [10, "08h"],
-            [11, ""],
-            [12, "10h"],
-            [13, ""],
-            [14, "12h"],
-            [15, ""],
-            [16, "14h"],
-            [17, ""],
-            [18, "16h"],
-            [19, ""],
-            [20, "18h"],
-            [21, ""],
-            [22, "20h"],
-            [23, ""]
-        ];
-        var data = [{
-            label: "Last 24 Hours",
-            data: data24Hours,
-            lines: {
-                show: true,
-                fill: true
-            },
-            points: {
-                show: true
-            }
-        }, {
-            label: "Last 48 Hours",
-            data: data48Hours,
-            lines: {
-                show: true
-            },
-            points: {
-                show: true
-            }
-        }, {
-            label: "Difference",
-            data: dataDifference,
-            bars: {
-                show: true
-            }
-        }];
-        var options = {
-            xaxis: {
-                ticks: ticks
-            },
-            series: {
-                shadowSize: 0
-            },
-            grid: {
-                hoverable: true,
-                clickable: true,
-                tickColor: "#f9f9f9",
-                borderWidth: 1,
-                borderColor: "#eeeeee"
-            },
-            colors: ["#6dc5a3", "#869cb3"],
-            tooltip: true,
-            tooltipOpts: {
-                defaultTheme: false
-            },
-            legend: {
-                labelBoxBorderColor: "#000000",
-    container: $("#legendcontainer26"),
-                noColumns: 0
-            }
-        };
-        var plot = $.plot($("#combine-chart #combine-chartContainer"),
-                data, options);
-    });
+        $.ajax({
 
+            type: 'POST',
+            url: "adminater/driverOnline" ,
+            dataType: "json",
+            success :function(data){
+                var data24Hours=new Array();
+                var data48Hours=new Array();
+                var dataDifference=new Array();
+                $.each(data.driverOnline1, function(i, item){
+                    data24Hours.push([i,item.driverNum]);
+                });
+                $.each(data.driverOnline2, function(i, item){
+                    data48Hours.push([i,item.driverNum]);
+                });
+                $.each(data.driverDifference, function(i, item){
+                    dataDifference.push([i,item]);
+                });
+                var ticks = [
+                    [0, "22h"],
+                    [1, ""],
+                    [2, "00h"],
+                    [3, ""],
+                    [4, "02h"],
+                    [5, ""],
+                    [6, "04h"],
+                    [7, ""],
+                    [8, "06h"],
+                    [9, ""],
+                    [10, "08h"],
+                    [11, ""],
+                    [12, "10h"],
+                    [13, ""],
+                    [14, "12h"],
+                    [15, ""],
+                    [16, "14h"],
+                    [17, ""],
+                    [18, "16h"],
+                    [19, ""],
+                    [20, "18h"],
+                    [21, ""],
+                    [22, "20h"],
+                    [23, ""]
+                ];
+                var data = [{
+                    label: "Last 24 Hours",
+                    data: data24Hours,
+                    lines: {
+                        show: true,
+                        fill: true
+                    },
+                    points: {
+                        show: true
+                    }
+                }, {
+                    label: "Last 48 Hours",
+                    data: data48Hours,
+                    lines: {
+                        show: true
+                    },
+                    points: {
+                        show: true
+                    }
+                }, {
+                    label: "Difference",
+                    data: dataDifference,
+                    bars: {
+                        show: true
+                    }
+                }];
+                var options = {
+                    xaxis: {
+                        ticks: ticks
+                    },
+                    yaxis: {
+                        min: 0,
+                        max: 100,
+                        ticks: 10
+                    },
+                    series: {
+                        shadowSize: 0
+                    },
+                    grid: {
+                        hoverable: true,
+                        clickable: true,
+                        tickColor: "#f9f9f9",
+                        borderWidth: 1,
+                        borderColor: "#eeeeee"
+                    },
+                    colors: ["#6dc5a3", "#869cb3"],
+                    tooltip: true,
+                    tooltipOpts: {
+                        defaultTheme: false
+                    },
+                    legend: {
+                        labelBoxBorderColor: "#000000",
+                        container: $("#legendcontainer26"),
+                        noColumns: 0
+                    }
+                };
+                var plot = $.plot($("#combine-chart #combine-chartContainer"),
+                    data, options);
+
+            }
+        });
+    });
+/*
     $(function() {
         var data1 = GenerateSeries(0);
         var data2 = GenerateSeries(100);
@@ -465,4 +415,4 @@ $(function() {
             ToggleSeries();
         });
         ToggleSeries();
-    });
+    });*/
