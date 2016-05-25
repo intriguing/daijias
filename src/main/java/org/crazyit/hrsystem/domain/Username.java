@@ -4,6 +4,8 @@ import java.io.Serializable;
 
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.persistence.*;
 
@@ -14,6 +16,7 @@ import javax.persistence.*;
 , discriminatorType=DiscriminatorType.INTEGER)
 @DiscriminatorValue(value="1")
 public class Username implements Serializable {
+	private static final Logger logger = LoggerFactory.getLogger(Username.class);
 	private static final long serialVersionUID = 48L;
 	@Id
 	@Column(name = "user_id")
@@ -75,7 +78,9 @@ public class Username implements Serializable {
 	}
 
 	public void setInfor(String infor) {
+		logger.info("修改的数据"+infor);
 		this.infor = infor;
+		logger.info("添加的数据"+this.infor);
 	}
 	public int getSex() {
 		return sex;

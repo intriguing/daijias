@@ -11,6 +11,8 @@ import org.crazyit.hrsystem.service.AdminaterManager;
 import org.crazyit.hrsystem.service.CodeManager;
 import org.crazyit.hrsystem.service.DriverManager;
 import org.crazyit.hrsystem.service.HourManager;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -33,11 +35,12 @@ public class AdminaterController {
     public void setAdminatermanager(AdminaterManager adminatermanager) {
         this.adminatermanager = adminatermanager;
     }
-
+    private static final Logger logger = LoggerFactory.getLogger(AdminaterController.class);
     @RequestMapping(value = "/register", method = RequestMethod.POST)
     public String Adminaterregister(@RequestParam("name") String name, @RequestParam("address") String address, @RequestParam("code") String code, @RequestParam("sample-radio") String sex, @RequestParam("phone") String phone,
                                     @RequestParam("pass") String pass, HttpServletRequest request) {
         Adminater adminater = new Adminater();
+        logger.info("地址对应的数据"+address);
         adminater.setName(name);
         adminater.setPhone(phone);
         adminater.setFlag("1");
