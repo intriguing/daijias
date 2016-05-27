@@ -12,9 +12,6 @@ import javax.persistence.*;
 @Entity
 @Table(name = "username_inf")
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-@DiscriminatorColumn(name="user_type"
-, discriminatorType=DiscriminatorType.INTEGER)
-@DiscriminatorValue(value="1")
 public class Username implements Serializable {
 	private static final Logger logger = LoggerFactory.getLogger(Username.class);
 	private static final long serialVersionUID = 48L;

@@ -107,6 +107,11 @@ public class DriverManagerImpl implements DriverManager{
 	}
 
 	@Override
+	public boolean updateOauth(String driverId, String oauth) {
+		return this.driverDao.updateOauth(driverId,oauth);
+	}
+
+	@Override
 	public int driverOnline() {
 		return this.driverDao.driverOnline();
 	}

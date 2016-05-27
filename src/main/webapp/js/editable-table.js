@@ -27,7 +27,14 @@ var EditableTable = function () {
                             html+="<td>"+item.driverrange+"</td>";
                             html+="<td>"+item.drivingYears+"</td>";
                             html+="<td>"+item.status+"</td>";
-                            html+="<td><a class=\"delete\" href=\"javascript:;\">Delete</a></td>"
+                            if(item.oauth==0){
+                                html+="<td><input  type=\"button\" value=\"通过\" onclick='passOauth("+item.id+",1)'></td>";
+                            }else {
+                                html+="<td><input  type=\"button\" value=\"取消通过\" onclick='passOauth("+item.id+",0)'></td>";
+                            }
+                           /* html+="<td> <a href="+item.imageUrl+"class=\"MagicZoom MagicThumb\"><img src="+item.imageUrl+"id=\"main_img\"class=\"main_img\" style=\"width:20px; height:20px;\" /></a></td>";*/
+                            html+="<td><a href="+item.imageUrl+">证明展示</a></td>"
+                            html+="<td><a class=\"delete\" href=\"javascript:;\">Delete</a></td>";
                             html+="</tr>";
                         });
                         $("#tbodys").append(html);

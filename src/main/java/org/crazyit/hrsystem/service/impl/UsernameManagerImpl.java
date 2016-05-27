@@ -25,10 +25,6 @@ public class UsernameManagerImpl implements UsernameManager{
 		{
 			return LOGIN_Adm;
 		}
-		else if (usernameDao.findByNameAndPass(adm).size() >= 1)
-		{
-			return LOGIN_User;
-		}
 		else
 		{
 			return LOGIN_FAIL;

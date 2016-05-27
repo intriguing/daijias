@@ -1,10 +1,11 @@
 package org.crazyit.hrsystem.action;
 
+import java.io.File;
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -23,6 +24,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 @Controller
 @RequestMapping("/driver")
@@ -36,12 +38,12 @@ public class DriverController {
     public void setDriverManager(DriverManager driverManager) {
         this.driverManager = driverManager;
     }
-
     @RequestMapping(value = "/register", method = RequestMethod.POST)
     @ResponseBody
-    public Object Driverregister(@RequestParam("driverYear") String driverYear,@RequestParam("phone") String phone, @RequestParam("driverRange") String driverRange,@RequestParam("pointX") String pointX, @RequestParam("pointY") String pointY,HttpServletRequest request,HttpServletResponse response) throws UnsupportedEncodingException {
+    public Object Driverregister(@RequestParam("driverYear") String driverYear, @RequestParam("phone") String phone, @RequestParam("driverRange") String driverRange, @RequestParam("pointX") String pointX, @RequestParam("pointY") String pointY, @RequestParam(value = "file") MultipartFile file, HttpServletRequest request, HttpServletResponse response) throws UnsupportedEncodingException {
         response.setCharacterEncoding("utf-8");
         request.setCharacterEncoding("utf-8");
+        String realPath=request.getRealPath("/");
         Map<String, Object> map = new HashMap<String, Object>();
         Username username=usernameManager.findUsernameByphone(phone);
         if(null==username){
@@ -60,6 +62,8 @@ public class DriverController {
         driver.setPointX(Integer.parseInt(pointX));
         driver.setPointY(Integer.parseInt(pointY));
         driver.setStarLeave(5);
+        driver.setOauth(0);
+        driver.setImageUrl(this.saveFile(file,realPath));
         if (null != driverManager.findByPhone(phone)) {
             map.put("code", false);
         } else {
@@ -216,5 +220,46 @@ public class DriverController {
             map.put("code",false);
         }
         return map;
+    }
+    private String saveFile(MultipartFile file,String realPath){
+        if(!file.isEmpty()){
+            try {
+                DateFormat df   =   new SimpleDateFormat( "yyyyMMdd");
+                String time =df.format(new Date());
+                int last=file.getOriginalFilename().lastIndexOf(".");
+                String suffess=file.getOriginalFilename().substring(last);
+                String filePath="image/"+time+getStringRandom(6)+suffess;
+                realPath=realPath+filePath;
+                File saveDir=new File(realPath);
+                if(!saveDir.getParentFile().exists())
+                    saveDir.getParentFile().mkdirs();
+                file.transferTo(saveDir);
+                return filePath;
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        return "";
+    }
+    //生成随机数字和字母,
+    private String getStringRandom(int length) {
+
+        String val = "";
+        Random random = new Random();
+
+        //参数length，表示生成几位随机数
+        for(int i = 0; i < length; i++) {
+
+            String charOrNum = random.nextInt(2) % 2 == 0 ? "char" : "num";
+            //输出字母还是数字
+            if( "char".equalsIgnoreCase(charOrNum) ) {
+                //输出是大写字母还是小写字母
+                int temp = random.nextInt(2) % 2 == 0 ? 65 : 97;
+                val += (char)(random.nextInt(26) + temp);
+            } else if( "num".equalsIgnoreCase(charOrNum) ) {
+                val += String.valueOf(random.nextInt(10));
+            }
+        }
+        return val;
     }
 }

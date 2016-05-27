@@ -116,6 +116,11 @@ public class AdminaterController {
         driverManager.deleteDriver(driverId);
         return "redirect:/editable_table.html";
     }
+    @RequestMapping(value = "/driverOauth", method = RequestMethod.POST)
+    public String AdminaterDriverOauth(@RequestParam("driverId") String driverId,@RequestParam("oauth") String oauth) {
+        driverManager.updateOauth(driverId,oauth);
+        return "redirect:/editable_table.html";
+    }
 
     @RequestMapping(value = "/driverDirs", method = RequestMethod.POST)
     @ResponseBody
