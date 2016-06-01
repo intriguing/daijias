@@ -103,7 +103,7 @@ var EditableTable = function () {
             $('#editable-sample a.delete').live('click', function (e) {
                 e.preventDefault();
 
-                if (confirm("Are you sure to delete this row ?") == false) {
+                if (confirm("你真的要删除这一行吗?") == false) {
                     return;
                 }
 
@@ -115,7 +115,7 @@ var EditableTable = function () {
                     data:{"driverId":nRow}
 
                 });
-                alert("Deleted! Do not forget to do some ajax to sync with backend :)");
+                alert("删除成功");
             });
 
             $('#editable-sample a.cancel').live('click', function (e) {
