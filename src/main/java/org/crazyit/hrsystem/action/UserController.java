@@ -65,7 +65,7 @@ public class UserController {
                 return map;
             }
             if (null != usernameManager.findUsernameByphone(username.getPhone())) {
-                map.put("code", true);
+                map.put("code", false);
                 return map;
             }
         }
