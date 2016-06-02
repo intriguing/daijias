@@ -53,6 +53,16 @@ public class AdminaterManagerImpl implements AdminaterManager{
 	}
 
 	@Override
+	public List<Driver> findDriverSearchAll(String key) {
+		return this.driverDao.findByKey(key);
+	}
+
+	@Override
+	public List<Driver> findDriverSearchString(String key) {
+		return this.driverDao.findByKeyString(key);
+	}
+
+	@Override
 	public List<Username> findUsername() {
 		// TODO Auto-generated method stub
 		return this.usernameDao.findUsername();

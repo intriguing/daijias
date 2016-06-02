@@ -35,12 +35,14 @@ public class AdminaterController {
     public void setAdminatermanager(AdminaterManager adminatermanager) {
         this.adminatermanager = adminatermanager;
     }
+
     private static final Logger logger = LoggerFactory.getLogger(AdminaterController.class);
+
     @RequestMapping(value = "/register", method = RequestMethod.POST)
     public String Adminaterregister(@RequestParam("name") String name, @RequestParam("address") String address, @RequestParam("code") String code, @RequestParam("sample-radio") String sex, @RequestParam("phone") String phone,
                                     @RequestParam("pass") String pass, HttpServletRequest request) {
         Adminater adminater = new Adminater();
-        logger.info("地址对应的数据"+address);
+        logger.info("地址对应的数据" + address);
         adminater.setName(name);
         adminater.setPhone(phone);
         adminater.setFlag("1");
@@ -111,14 +113,66 @@ public class AdminaterController {
         return map;
     }
 
+    @RequestMapping(value = "/driverSearchAll", method = RequestMethod.POST)
+    @ResponseBody
+    public Object AdminaterDriverSearchAll(@RequestParam("keyword") String keyword) {
+        Map<String, Object> map = new HashMap<String, Object>();
+        List<Driver> driverList = new ArrayList<Driver>();
+        Iterator<Driver> iterator = adminatermanager.findDriverSearchAll(keyword).iterator();
+        while (iterator.hasNext()) {
+            driverList.add(iterator.next());
+        }
+        map.put("drivers", driverList);
+        return map;
+    }
+
+    @RequestMapping(value = "/driverSearchString", method = RequestMethod.POST)
+    @ResponseBody
+    public Object AdminaterDriverSearchString(@RequestParam("keyword") String keyword) {
+        Map<String, Object> map = new HashMap<String, Object>();
+        List<Driver> driverList = new ArrayList<Driver>();
+        Iterator<Driver> iterator = adminatermanager.findDriverSearchString(keyword).iterator();
+        while (iterator.hasNext()) {
+            driverList.add(iterator.next());
+        }
+        map.put("drivers", driverList);
+        return map;
+    }
+
     @RequestMapping(value = "/driverDelete", method = RequestMethod.POST)
     public String AdminaterDriverDelete(@RequestParam("driverId") String driverId) {
         driverManager.deleteDriver(driverId);
         return "redirect:/editable_table.html";
     }
+
+    @RequestMapping(value = "/driverById", method = RequestMethod.POST)
+    @ResponseBody
+    public Object AdminaterDriverById(@RequestParam("driverId") String driverId) {
+        Driver driver = driverManager.findById(driverId);
+        Map<String, Object> map = new HashMap<String, Object>();
+        map.put("driver", driver);
+        return map;
+    }
+
+    @RequestMapping(value = "/driverUpdate", method = RequestMethod.POST)
+    @ResponseBody
+    public String AdminaterDriverUpdate(@RequestParam("driverId") String driverId, @RequestParam("name") String name, @RequestParam("sex") String sex, @RequestParam("phone") String phone, @RequestParam("infor") String infor, @RequestParam("driverrange") String driverrange, @RequestParam("drivingYears") String drivingYears, @RequestParam("status") String status) {
+        Driver driver = driverManager.findById(driverId);
+        driver.setName(name);
+        driver.setPhone(phone);
+        driver.setSex(Integer.parseInt(sex));
+        driver.setInfor(infor);
+        driver.setDrivingYears(Integer.parseInt(drivingYears));
+        driver.setDriverrange(Integer.parseInt(driverrange));
+        driver.setStatus(Integer.parseInt(status));
+       if(driverManager.updateDriver(driver))
+           return "true";
+        return "false";
+    }
+
     @RequestMapping(value = "/driverOauth", method = RequestMethod.POST)
-    public String AdminaterDriverOauth(@RequestParam("driverId") String driverId,@RequestParam("oauth") String oauth) {
-        driverManager.updateOauth(driverId,oauth);
+    public String AdminaterDriverOauth(@RequestParam("driverId") String driverId, @RequestParam("oauth") String oauth) {
+        driverManager.updateOauth(driverId, oauth);
         return "redirect:/editable_table.html";
     }
 
@@ -138,70 +192,72 @@ public class AdminaterController {
                 busyline++;
             }
         }
-        int onlines=100*online/(online+offline+busyline);
-        int offlines=100*offline/(online+offline+busyline);
-        int busylines=100*busyline/(online+offline+busyline);
+        int onlines = 100 * online / (online + offline + busyline);
+        int offlines = 100 * offline / (online + offline + busyline);
+        int busylines = 100 * busyline / (online + offline + busyline);
         map.put("onLine", onlines);
         map.put("offLine", offlines);
-        map.put("busyLine",busylines);
+        map.put("busyLine", busylines);
         return map;
     }
+
     @RequestMapping(value = "/driverStar", method = RequestMethod.POST)
     @ResponseBody
-    public Object AdminaterDriverStar(){
+    public Object AdminaterDriverStar() {
         Map<String, Object> map = new HashMap<String, Object>();
         Iterator<Driver> iterator = adminatermanager.findDriver().iterator();
-        int five=0,four=0,three=0,two=0,one=0;
+        int five = 0, four = 0, three = 0, two = 0, one = 0;
         while (iterator.hasNext()) {
             int temp = iterator.next().getStarLeave();
             if (temp == 5) {
                 five++;
             } else if (temp == 4) {
                 four++;
-            } else if(temp==3){
+            } else if (temp == 3) {
                 three++;
-            }else if(temp==2){
+            } else if (temp == 2) {
                 two++;
-            }else{
+            } else {
                 one++;
             }
         }
-        int fives=100*five/(five+four+three+two+one);
-        int fours=100*four/(five+four+three+two+one);
-        int threes=100*three/(five+four+three+two+one);
-        int twos=100*two/(five+four+three+two+one);
-        int ones=100*one/(five+four+three+two+one);
+        int fives = 100 * five / (five + four + three + two + one);
+        int fours = 100 * four / (five + four + three + two + one);
+        int threes = 100 * three / (five + four + three + two + one);
+        int twos = 100 * two / (five + four + three + two + one);
+        int ones = 100 * one / (five + four + three + two + one);
         map.put("five", fives);
         map.put("four", fours);
-        map.put("three",threes);
-        map.put("two",twos);
-        map.put("one",ones);
+        map.put("three", threes);
+        map.put("two", twos);
+        map.put("one", ones);
         return map;
     }
+
     @RequestMapping(value = "/driverOnline", method = RequestMethod.POST)
     @ResponseBody
     public Object AdminaterDriverOnline() {
         Map<String, Object> map = new HashMap<String, Object>();
-        SimpleDateFormat  sdf = new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         Date dateNow = new Date();
         Calendar cl = Calendar.getInstance();
         cl.setTime(dateNow);
         cl.add(Calendar.DAY_OF_YEAR, -1);
         Date dateFrom = cl.getTime();
         String dateString = sdf.format(dateFrom);
-        List<Hour> temp=hourManager.findByDate(dateString);
+        List<Hour> temp = hourManager.findByDate(dateString);
         cl.add(Calendar.DAY_OF_YEAR, -1);
         dateFrom = cl.getTime();
         dateString = sdf.format(dateFrom);
-        List<Hour> temps=hourManager.findByDate(dateString);
-        List<Integer> tempI=new ArrayList<Integer>();
-        for(int j=0;j<temp.size();j++){
-            Integer integer=new Integer(temp.get(j).getDriverNum()-temps.get(j).getDriverNum());
+        List<Hour> temps = hourManager.findByDate(dateString);
+        List<Integer> tempI = new ArrayList<Integer>();
+        for (int j = 0; j < temp.size(); j++) {
+            Integer integer = new Integer(temp.get(j).getDriverNum() - temps.get(j).getDriverNum());
             tempI.add(integer);
         }
-        map.put("driverOnline1",temp);
-        map.put("driverOnline2",temps);
-        map.put("driverDifference",tempI);
+        map.put("driverOnline1", temp);
+        map.put("driverOnline2", temps);
+        map.put("driverDifference", tempI);
         return map;
     }
 }

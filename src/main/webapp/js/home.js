@@ -11,7 +11,7 @@
                 html += "<tr>";
                 html += "<td>" + item.id + "</td>";
                 html += "<td>" + item.name + "</td>";
-                if (item.sex = 0) {
+                if (item.sex ==0) {
                     html += "<td>男</td>";
                 } else {
                     html += "<td>女</td>";
@@ -46,7 +46,7 @@
             html += "<tr>";
             html += "<td>" + item.id + "</td>";
             html += "<td>" + item.name + "</td>";
-            if (item.sex = 0) {
+            if (item.sex ==0) {
                 html += "<td>男</td>";
             } else {
                 html += "<td>女</td>";

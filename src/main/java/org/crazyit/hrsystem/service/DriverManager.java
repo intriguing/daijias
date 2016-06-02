@@ -12,6 +12,8 @@ public interface DriverManager {
 	boolean updateDriverrange(String name,int driverrange);
 	boolean updateStatus(String name,int status);
 	Driver findByName(String name);
+	Driver findById(String driverId);
+	boolean updateDriver(Driver driver);
 	List<Driver> findDrivering();
 	DriversInfo searchNearDriver(int pointX,int pointY);
 	boolean changeDriverStatus(String phone,String status,String pointX,String pointY);

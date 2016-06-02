@@ -10,5 +10,7 @@ public interface AdminaterManager {
 	Adminater findByName(String name);
 	boolean savaAdminater(Adminater adminater);
 	List<Driver> findDriver();
+	List<Driver> findDriverSearchAll(String key);
+	List<Driver> findDriverSearchString(String key);
 	List<Username> findUsername();
 }

@@ -68,6 +68,17 @@ public class DriverManagerImpl implements DriverManager{
 	}
 
 	@Override
+	public Driver findById(String driverId) {
+		return this.driverDao.findById(driverId);
+	}
+
+	@Override
+	public boolean updateDriver(Driver driver) {
+		this.driverDao.update(driver);
+		return true;
+	}
+
+	@Override
 	public List<Driver> findDrivering() {
 		// TODO Auto-generated method stub
 		return this.driverDao.findDrivering();
@@ -101,7 +112,8 @@ public class DriverManagerImpl implements DriverManager{
 	}
 
 	@Override
-	public boolean deleteDriver(String driverId) {
+	public boolean
+	deleteDriver(String driverId) {
 		this.driverDao.delete(Driver.class,Integer.parseInt(driverId));
 		return true;
 	}
