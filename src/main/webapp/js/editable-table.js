@@ -1,7 +1,6 @@
 var EditableTable = function () {
 
     return {
-        //main function to initiate the module
         init: function () {
             function ajax() {
                 $.ajax({
@@ -166,20 +165,16 @@ var EditableTable = function () {
             $('#editable-sample a.edit').live('click', function (e) {
                 e.preventDefault();
 
-                /* Get the row as a parent of the link that was clicked on */
                 var nRow = $(this).parents('tr')[0];
 
                 if (nEditing !== null && nEditing != nRow) {
-                    /* Currently editing - but not this row - restore the old before continuing to edit mode */
                     restoreRow(nEditing);
                     editRow(nRow);
                     nEditing = nRow;
                 } else if (nEditing == nRow && this.innerHTML == "Save") {
-                    /* Editing this row and want to save it */
                     saveRow(nEditing);
                     nEditing = null;
                 } else {
-                    /* No edit in progress - let's start one */
                     editRow(nRow);
                     nEditing = nRow;
                 }
